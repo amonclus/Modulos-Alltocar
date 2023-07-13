@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_view" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='date_planned']" position="before">
+                    <label for="date_expected_port_arrival"/>
+                    <div name="date_expected_port_arrival_div" class="o_row">
+                        <field name="date_expected_port_arrival" />
+                    </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_tree_inherit_view" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_planned']" position="before">
+                    <field name="date_expected_port_arrival" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_search_inherit_view" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.search</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//group//filter[@name='order_date']" position="after">
+                    <separator/>
+                    <filter string="Port Arrival Date" name="date_expected_port_arrival" domain="[]" context="{'group_by': 'date_expected_port_arrival'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

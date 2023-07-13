@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="purchase_order_arrivals">
+    <t t-call="web.external_layout">
+
+        <div class="page">
+            <div style="page-break-inside: avoid">
+                <t t-foreach="docs" t-as="o">
+                    <div class="mt-9">
+                        <h6> <b> Purchase Order #<span id="purchase_expected_arrival_name"  t-field="o.name" /></b> </h6>
+                    </div>
+                    <div class="mt-9">
+                        <h8> <b>Date Port Arrival: &#140; </b> <span id="purchase_expected_arrival_name"  t-field="o.date_expected_port_arrival" widget="date"/></h8>
+                    </div>
+                    <div class="mt-9">
+                        <h8> <b>Vendor: &#140; </b> <span id="purchase_expected_arrival_name"  t-field="o.partner_id"/></h8>
+                    </div>
+                    <div class="mt-9">
+                        <h8> <b>Buyer: &#140; </b>  <span id="purchase_expected_arrival_name"  t-field="o.user_id"/></h8>
+                    </div>
+
+                    <table class="table table-sm o_main_table table-borderless mt-2" style="font-size: 13px">
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th name="name"><strong>Product Name</strong></th>
+                                <th name="quantity"><strong>Product Quantity</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.order_line" t-as="l">
+                                <tr>
+                                    <td id="name">
+                                        <span t-field="l.name" />
+                                    </td>
+                                    <td name="quantity">
+                                        <span t-field="l.product_qty"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br> </br>
+                    <br> </br>
+                </t>
+            </div>
+        </div>
+    </t>
+</template>
+
+
+    <template id="purchase_order_arrivals_lang">
+        <t t-call="web.html_container">
+            <t t-call="purchase_expected_arrival.purchase_order_arrivals" />
+        </t>
+    </template>
+
+</odoo>
