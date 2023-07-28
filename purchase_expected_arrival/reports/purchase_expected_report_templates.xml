@@ -20,7 +20,7 @@
                         <h8> <b>Buyer: &#140; </b>  <span id="purchase_expected_arrival_name"  t-field="o.user_id"/></h8>
                     </div>
 
-                    <table class="table table-sm o_main_table table-borderless mt-2" style="font-size: 13px">
+                    <table class="table table-sm o_main_table table-borderless mt-2" styGenGele="font-size: 13px">
                         <thead style="display: table-row-group">
                             <tr>
                                 <th name="name"><strong>Product Name</strong></th>

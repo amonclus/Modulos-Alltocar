@@ -1,13 +1,14 @@
 from odoo import fields, models
 from odoo.exceptions import ValidationError
+from dateutil.relativedelta import relativedelta
 
 
 class ExpectedArrivalReportWizard(models.TransientModel):
     _name = 'wizard.expected_arrival_report'
     _description = 'Prints report of all expected port arrivals'
 
-    start_date = fields.Date(string="Start Date", default=fields.Datetime.now)
-    end_date = fields.Date(string="End Date")
+    start_date = fields.Date(string="Start Date", default=(fields.Datetime.now() - relativedelta(weeks=3)))
+    end_date = fields.Date(string="End Date", default=(fields.Datetime.now() + relativedelta(months=3)))
 
     def action_print(self):
         if self.end_date < self.start_date:
