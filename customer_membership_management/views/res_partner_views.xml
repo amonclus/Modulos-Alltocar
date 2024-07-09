@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="customer_membership_res_partner_form" model="ir.ui.view">
+            <field name="name">customer.membership.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                        <field name="is_membership_active"/>
+                        <field name="last_membership_purchase_date"/>
+                        <field name="membership_expiration_date"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="customer_membership_res_partner_search" model="ir.ui.view">
+            <field name="name">customer.membership.res.partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="before">
+                    <filter name="membership_ok" string="Alltocar Members" domain="[('is_membership_active', '=', True)]"/>
+                    <filter name="no_membership" string="Not Members" domain="[('is_membership_active', '=', False)]"/>
+                    <separator/>
+                </xpath>
+                <xpath expr="//filter[@name='group_country']" position="after">
+                    <filter name="group_membership" string="Membership Status" context="{'group_by': 'is_membership_active'}"/>
+                    <filter string="Membership Purchase Date" name="groupby_membership_purchase_date" domain="[]" context="{'group_by': 'last_membership_purchase_date'}"/>
+                    <filter string="Membership Expiration Date" name="groupby_membership_expiration_date" domain="[]" context="{'group_by': 'membership_expiration_date'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="membership_purchase_action_server" model="ir.actions.server">
+            <field name="name">Membership Purchase Server Action</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">
+action = model._get_membership_purchase()
+            </field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

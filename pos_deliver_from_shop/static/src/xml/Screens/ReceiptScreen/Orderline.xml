@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="note_to_wh_orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+        <xpath expr="//ul[hasclass('info-list')]" position="inside">
+            <span>WH NOTE</span>
+            <t t-if="props.line.get_note_to_wh()">
+                <li class="info">
+                    <i class="fa fa-tag" role="img" aria-label="Note" title="Note WH"/>
+                    <t t-esc="props.line.get_note_to_wh()" />
+                </li>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

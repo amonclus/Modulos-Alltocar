@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_point_sale_form_inherit_from_shop" model="ir.ui.view">
+        <field name="name">view.point.sale.form.inherit.from.shop</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']//tree//field[@name='customer_note']" position="before">
+                <field name="note_to_wh" string="Note" optional="show"/>
+            </xpath>
+            <xpath expr="//page[@name='products']//form//field[@name='notice']" position="before">
+                <field name="note_to_wh" string="Note"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_point_sale_internal_search_inherit_from_shop" model="ir.ui.view">
+        <field name="name">stock.point.sale.search.from.shop</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field
+                    name="lines"
+                    string="Note to WH"
+                    filter_domain="[('lines.note_to_wh','ilike',self)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

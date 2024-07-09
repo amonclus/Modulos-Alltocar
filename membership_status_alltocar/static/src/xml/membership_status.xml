@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates>
+    <t t-name="owl.MembershipStatus" owl="1">
+        <t t-if="isPartnerSelected">
+            <div class="control-button membership-status-active-button"  t-if="isActive and isPartnerSelected">
+                <i class="fa fa-user" />
+                <span>Membership Active</span>
+            </div>
+            <div class="control-button membership-status-inactive-button" t-if="!isActive and isPartnerSelected" >
+                <i class="fa fa-user"/>
+                <span> Membership Inactive </span>
+            </div>
+        </t>
+    </t>
+</templates>
+
+
+

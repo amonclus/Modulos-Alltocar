@@ -1,0 +1,37 @@
+.membership-status-active-button {
+    display: flex;
+    align-items: center; /* Ensures vertical alignment of items */
+    justify-content: center; /* Centers the text horizontally */
+    color: green;
+    position: relative;
+}
+
+.membership-status-inactive-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:red;
+    position: relative;
+}
+
+.membership-status-not-selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: small;
+}
+
+.membership-status-active-button .fa-user {
+    position: absolute;
+    left: 21px; /* Adjust this value to suit your needs */
+    top: 50%;
+    transform: translateY(-50%); /
+} 
+
+.membership-status-inactive-button .fa-user {
+    position: absolute;
+    left: 21px; /* Adjust this value to suit your needs */
+    top: 50%;
+    transform: translateY(-50%); /
+}
