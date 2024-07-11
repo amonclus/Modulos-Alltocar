@@ -8,6 +8,8 @@
             <field name="uom_po_id" position="after">
                 <field name="is_membership_product" groups="customer_membership_management.membership_manager"/>
             </field>
+
         </field>
     </record>
+
 </odoo>

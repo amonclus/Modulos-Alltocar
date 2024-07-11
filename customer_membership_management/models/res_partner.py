@@ -17,7 +17,7 @@ class ResPartner(models.Model):
     is_membership_active = fields.Boolean(
         string='Membership Active',
         tracking=True,
-        readonly=False,
+        readonly=True,
         help="If this checkbox is ticked, it means that the user membership is active."
     )
     last_membership_purchase_date = fields.Date(string="Last Membership Purchase Date", tracking=True, readonly=True)
