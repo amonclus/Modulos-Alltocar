@@ -1,65 +1,118 @@
-
-odoo.define("membership_status.MembershipStatus", function(require){
+odoo.define("membership_status.MembershipStatus", function(require) {
     "use strict";
-        const {useState} = require("@odoo/owl")
-        const PosComponent = require("point_of_sale.PosComponent");
-        const ProductScreen = require("point_of_sale.ProductScreen");
-        const Registries = require("point_of_sale.Registries");
-        const {useListener} = require("@web/core/utils/hooks");
+    const { useState } = require("@odoo/owl");
+    const PosComponent = require("point_of_sale.PosComponent");
+    const ProductScreen = require("point_of_sale.ProductScreen");
+    const Registries = require("point_of_sale.Registries");
+    const { useBus } = require("@web/core/utils/hooks");
+    const { isConnectionError } = require('point_of_sale.utils');
 
-        class MembershipStatus extends PosComponent {
-            setup() {
-                super.setup();
-                this.state = useState({ membershipActive: null, error: null, partnerId:null, partnerSelected: false })
+    class MembershipStatus extends PosComponent {
+        setup() {
+            super.setup();
+            useBus(this.env.posbus, 'update-membership-status', this.updateButton);
+            useBus(this.env.posbus, 'set-member-list', this.setMemberList);
+            useBus(this.env.posbus, 'remove-member-list', this.removeMemberList);
 
-                //We get the current order, its client and their id
-                const order = this.env.pos.get_order()
-                const partner = order.get_partner()
-                if(partner != null) {
-                    this.state.partnerSelected = true;
-                    this.state.partnerId = partner.id
-                    this.fetchMembershipStatus()
-                }
+            this.state = useState({
+                membershipActive: null,
+                error: null,
+                order: null,
+                partner: null,
+                partnerSelected: false,
+                membershipChange: null,
+            });
 
-            }
+            this.initOrder();
+            this.updateButton();
+        }
 
-            //Makes an rpc call to the backend server and obtains the membership status for the parameter partnerId
-            async fetchMembershipStatus() {
-                try {
-                    const result = await this.rpc({
-                        route: '/get_membership_status',                //http route to python script that makes the db request
-                        params: {
-                            'partner_id': this.state.partnerId
-                        }
-                    });
-                    if (result.error) {
-                        this.state.error = result.error
-                    } else {
-                        this.state.membershipActive = result.membership_active
-                    }
-                } catch (error) {
-                    this.state.error = 'Failed to fetch membership status'
-                }
-            }
+        initOrder() {
+            this.state.order = this.env.pos.get_order();
+            this.state.partner = this.state.order.get_partner();
+        }
 
-            get isActive() {
-                return !!this.state.membershipActive;
-            }
+        get isPartnerSelected() {
+            return this.state.partnerSelected && !this.state.error;
+        }
 
-            get isPartnerSelected() {
-                return this.state.partnerSelected
+        updateButton() {
+            this.initOrder();
+            this.getinfo();
+            this.updatePricelist();
+        }
+
+        async handleError() {
+            await this.showPopup('OfflineErrorPopup', {
+                title: this.env._t('Offline'),
+                body: this.env._t('Unable to save changes.'),
+            });
+        }
+
+        getinfo() {
+            this.state.partnerSelected = !!this.state.partner;
+            if (this.state.partnerSelected) {
+                this.fetchMembershipStatus();
             }
         }
 
-        MembershipStatus.template = "owl.MembershipStatus"
+        async fetchMembershipStatus() {
+            try {
+                const result = await this.rpc({
+                    route: '/get_membership_status',
+                    params: { 'partner_id': this.state.partner.id }
+                });
+                if (result.error) {
+                    this.state.error = result.error;
+                } else {
+                    this.state.membershipActive = result.membership_active;
+                }
+            } catch (error) {
+                this.state.error = 'Failed to fetch membership status';
+                if (isConnectionError(error)) {
+                    this.handleError();
+                } else {
+                    throw error;
+                }
+            }
+        }
 
-        ProductScreen.addControlButton({
-            component: MembershipStatus,
-            position: ["before" , "SetSaleOrderButton"],
-        });
+        //Gets the list that should be active and sets it
+        updatePricelist() {
+            const listName = this.state.partner && this.state.partner.is_membership_active ? "Membership Pricelist" : "Retail Non-Member Pricelist";
+            this.setList(listName);
+        }
 
-        Registries.Component.add(MembershipStatus)
-    
-        return MembershipStatus
+        //Sets the pricelist passed as a parameter
+        setList(list) {
+            const priceList = this.env.pos.pricelists.find(pricelist => pricelist.name === list);
+            if (priceList) {
+                this.state.order.set_pricelist(priceList);
+            }
+        }
+
+        //Sets the Non-Members pricelist for those clients that don't have an active membership
+        removeMemberList() {
+            if (!this.state.partner || !this.state.partner.is_membership_active) {
+                this.setList("Retail Non-Member Pricelist");
+            }
+        }
+
+        //Used from other files using a bus
+        setMemberList() {
+            this.setList("Membership Pricelist");
+        }
+    }
+
+    MembershipStatus.template = "owl.MembershipStatus";
+
+    ProductScreen.addControlButton({
+        component: MembershipStatus,
+        position: ["before", "GiftCouponButton"],
     });
+
+    Registries.Component.add(MembershipStatus);
+    return MembershipStatus;
+});
+
 

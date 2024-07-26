@@ -3,17 +3,39 @@
 <templates>
     <t t-name="owl.MembershipStatus" owl="1">
         <t t-if="isPartnerSelected">
-            <div class="control-button membership-status-active-button"  t-if="isActive and isPartnerSelected">
-                <i class="fa fa-user" />
+            <div class="membership-status-active-button control-button"  t-if="state.membershipActive">
                 <span>Membership Active</span>
             </div>
-            <div class="control-button membership-status-inactive-button" t-if="!isActive and isPartnerSelected" >
-                <i class="fa fa-user"/>
+            <div class="control-button membership-status-inactive-button" t-if="!state.membershipActive">
                 <span> Membership Inactive </span>
             </div>
         </t>
     </t>
+
+    <t t-name="PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//select[@name='country_id']/.." position="after">
+            <div class="partner-detail">
+                <span class="label">Membership</span>
+                    <div class="membership-edit-checkbox">
+                        <input type="checkbox" t-att-checked="props.partner.is_membership_active" t-on-click.prevent="" id="membership_active"/>
+                    </div>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="PartnerLine" t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[@class='edit-partner-button']/.." position="before">
+            <div class="partner-detail">
+                <div class="membership-line-checkbox">
+                    <input type="checkbox" t-att-checked="props.partner.is_membership_active" t-on-click.prevent="" id="membership_active_line"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
 </templates>
+
+
 
 
 

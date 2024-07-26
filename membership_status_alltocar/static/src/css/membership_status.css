@@ -15,10 +15,10 @@
 }
 
 .membership-status-active-button .fa-user {
-    position: absolute;
-    left: 21px; /* Adjust this value to suit your needs */
-    top: 50%;
-    transform: translateY(-50%); /
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+
+    text-rendering: auto;
 } 
 
 .membership-status-inactive-button .fa-user {
@@ -26,4 +26,14 @@
     left: 21px; /* Adjust this value to suit your needs */
     top: 50%;
     transform: translateY(-50%); /
+}
+
+.membership-edit-checkbox {
+    position: relative;
+    transform: translateX(-5%) translateY(-92%);
+}
+
+.partner-detail {
+     position: relative;
+    transform: translateX(40%)
 }

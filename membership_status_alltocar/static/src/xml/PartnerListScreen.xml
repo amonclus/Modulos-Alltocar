@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <!-- Extend the PartnerListScreen template -->
+    <t t-name="PartnerListScreenExtension" t-inherit="point_of_sale.PartnerListScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//table[@class='partner-list']/thead/tr/th[@class='partner-line-details']" position="before">
+            <div class="membership-title">
+                <th>Membership</th>
+            </div>
+        </xpath>
+    </t>
+</templates>

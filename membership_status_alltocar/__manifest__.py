@@ -18,16 +18,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['point_of_sale', 'customer_membership_management'],
+    'depends': ['point_of_sale'],
 
     # always loaded
     'data': [
     ],
     'assets':{
         'point_of_sale.assets': [
-            'membership_status_alltocar/static/src/js/membership_status.js',
-            'membership_status_alltocar/static/src/xml/membership_status.xml',
-            'membership_status_alltocar/static/src/css/membership_status.css',
+            'membership_status_alltocar/static/src/js/*.js',
+            'membership_status_alltocar/static/src/xml/*.xml',
+            'membership_status_alltocar/static/src/css/*.css',
         ]
     }
 }
