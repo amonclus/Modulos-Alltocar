@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the partner form view to add the membership_points field -->
+        <record id="customer_membership_points" model="ir.ui.view">
+            <field name="name">customer.membership.points</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='membership_expiration_date']" position="after">
+                    <field name="membership_points"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
