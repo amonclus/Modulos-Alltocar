@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Alltogo Membership Points",
+    'name': "Alltogo Membership ID",
 
     'summary': """""",
 
@@ -21,13 +21,12 @@
 
     # always loaded
     'data': [
-        'views/res_partner_views.xml',
+        'views/res_partner.xml'
     ],
     'assets':{
         'point_of_sale.assets': [
-            'membership_points/static/src/js/*.js',
-            'membership_points/static/src/xml/*.xml',
-            'membership_points/static/src/css/*.css',
+            'membership_id_reader/static/src/js/*.js',
+            'membership_id_reader/static/src/xml/*.xml',
         ]
     }
 }

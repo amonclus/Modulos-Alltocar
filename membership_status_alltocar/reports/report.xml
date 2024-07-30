@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="report_membership_id_action"
+        string="Membership Id"
+        model="res.partner"
+        report_type="qweb-pdf"
+        file="membership_status_alltocar.membership_id_template"
+        name="membership_status_alltocar.membership_id_template"
+    />
+</odoo>

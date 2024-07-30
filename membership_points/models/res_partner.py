@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
+from odoo import models, fields, api, _
 
 
 class ResPartner(models.Model):
@@ -9,7 +9,7 @@ class ResPartner(models.Model):
         string='Membership Points',
         tracking=True,
         readonly=True,
-        help="This shows the points that the customer has accumulated"
+        help="This shows the points that the customer has accumulated",
     )
 
 
