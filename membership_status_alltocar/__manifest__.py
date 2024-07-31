@@ -22,8 +22,7 @@
 
     # always loaded
     'data': [
-        'reports/report.xml',
-        'reports/report_membership_id.xml',
+
 
     ],
     'assets':{

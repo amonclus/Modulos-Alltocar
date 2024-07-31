@@ -5,7 +5,7 @@
         string="Membership Id"
         model="res.partner"
         report_type="qweb-pdf"
-        file="membership_status_alltocar.membership_id_template"
-        name="membership_status_alltocar.membership_id_template"
+        file="membership_id_reader.membership_id_template"
+        name="membership_id_reader.membership_id_template"
     />
 </odoo>

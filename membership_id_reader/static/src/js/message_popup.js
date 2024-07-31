@@ -8,7 +8,6 @@ odoo.define('point_of_sale.MessagePopup', function (require){
     class MessagePopup extends AbstractAwaitablePopup {
         setup(){
             super.setup()
-            console.log("New Message Popup")
             this.state = useState({text_value: ''})
             this.txtRef = useRef('text-value')
 
@@ -16,14 +15,24 @@ odoo.define('point_of_sale.MessagePopup', function (require){
         }
 
         confirm(){
-            console.log("You confirmed message popup.")
-            console.log("Text Value", this.state.text_value)
-            console.log(this.env.pos.get_order())
-            super.confirm()
+            const partner = this.env.pos.get_order().get_partner()
+            const isValid = /^\d{4}$/.test(this.state.text_value);
+
+             if (!isValid) {
+                alert("Please enter a valid 4-digit number.");
+                this.txtRef.el.focus();
+                return;
+            }
+            else if(partner.membership_id != this.state.text_value) {
+                 alert("Incorrect id, please try again");
+                this.txtRef.el.focus();
+                return;
+            }
+            else super.confirm()
         }
 
         cancel(){
-            console.log("You cancelled message popup.")
+            this.showScreen('ProductScreen')
             super.cancel()
         }
 

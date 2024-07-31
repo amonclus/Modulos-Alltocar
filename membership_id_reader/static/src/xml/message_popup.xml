@@ -8,7 +8,7 @@
                     Enter Customer Id
                 </header>
                 <div class="body">
-                    <input type="text" placeholder="Customer Id" t-model="state.text_value" t-ref="text-value"/>
+                    <input type="text" placeholder="Customer Id" t-model="state.text_value" t-ref="text-value"  pattern="\d{4}" />
                 </div>
                 <div class="footer">
                     <div class="button confirm highlight" t-on-click="confirm">

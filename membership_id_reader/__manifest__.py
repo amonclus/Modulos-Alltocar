@@ -21,12 +21,15 @@
 
     # always loaded
     'data': [
-        'views/res_partner.xml'
+        'views/res_partner.xml',
+        'reports/report.xml',
+        'reports/report_membership_id.xml',
     ],
     'assets':{
         'point_of_sale.assets': [
             'membership_id_reader/static/src/js/*.js',
             'membership_id_reader/static/src/xml/*.xml',
+            'membership_id_reader/static/src/css/*.css',
         ]
     }
 }
