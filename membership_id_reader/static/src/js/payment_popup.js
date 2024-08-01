@@ -5,18 +5,15 @@ import Registries from 'point_of_sale.Registries';
 const BarcodeScanner = require('@web/webclient/barcode/barcode_scanner');
 
 const PaymentIdCheck = (ProductScreen) => class extends ProductScreen {
-
         setup() {
             super.setup()
             let data;
-
         }
         async _onClickPay() {
             const order = this.env.pos.get_order()
             const partner = order.get_partner()
             if(partner.is_membership_active && partner.membership_id) {
-                await this.open_mobile_scanner()
-
+                await this. ()
                 if(String(this.data) == partner.membership_id) {
                      super._onClickPay()
                 }
