@@ -9,15 +9,18 @@ const MembershipPaymentPoints = (PaymentScreen) => class extends PaymentScreen {
     setup() {
         super.setup()
         this.state = useState({showUndo: false, points: 0});
-        useBus(this.env.posbus, 'set-initial-points', this.setPoints);
+        useBus(this.env.posbus, 'set-points', this.setPoints);
     }
 
     async validateOrder(isForceValidate){
         super.validateOrder()
-        const price = this.currentOrder.get_total_with_tax() + this.currentOrder.get_rounding_applied()
-        if(this.currentOrder.get_partner().is_membership_active && price >= 5) {
-            this.state.points = Math.round(price*0.2)
-            this.setPoints()
+        const partner = this.currentOrder.get_partner()
+        if(partner) {
+            const price = this.currentOrder.get_total_with_tax() + this.currentOrder.get_rounding_applied()
+            if (partner.is_membership_active && price >= 5) {
+                this.state.points = Math.round(price * 0.2)
+                this.setPoints()
+            }
         }
     }
 

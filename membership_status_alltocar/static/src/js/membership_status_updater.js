@@ -8,6 +8,7 @@ const ProductScreenInherit = (product_screen) => class extends product_screen {
         super.setup();
     }
 
+    //Inherited function from ProductScreen. Accessed when the partner changes
     async onClickPartner() {
         const currentPartner = this.currentOrder.get_partner();
         if (currentPartner && this.currentOrder.getHasRefundLines()) {
@@ -25,11 +26,12 @@ const ProductScreenInherit = (product_screen) => class extends product_screen {
         const { confirmed, payload: newPartner } = await this.showTempScreen('PartnerListScreen', { partner: currentPartner });
         if (confirmed) {
             this.currentOrder.set_partner(newPartner);
-            this.env.posbus.trigger('update-membership-status');
+            this.env.posbus.trigger('update-membership-status');    //Method located in membership_status.js
             this.isThereProduct();
         }
     }
 
+    //Checks if there is a membership product already selected when the partner is changed.
     isThereProduct() {
         const orderProducts = this.currentOrder.get_orderlines();
         const membershipProductNames = this.state.membershipProducts;
@@ -41,6 +43,7 @@ const ProductScreenInherit = (product_screen) => class extends product_screen {
         }
     }
 
+    //Inherited function that checks if the pricelist should change when a new product is added
     async _addProduct(product, options) {
         super._addProduct(product, options);
         if (product.is_membership_product) {
@@ -48,6 +51,7 @@ const ProductScreenInherit = (product_screen) => class extends product_screen {
         }
     }
 
+    //Checks if the deleted product is a membership product, if so, pricelist changes
     async _updateSelectedOrderline(event) {
         super._updateSelectedOrderline(event);
         const orderLine = this.currentOrder.get_selected_orderline();

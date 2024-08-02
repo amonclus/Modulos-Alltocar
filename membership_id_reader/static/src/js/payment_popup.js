@@ -12,11 +12,15 @@ const PaymentIdCheck = (ProductScreen) => class extends ProductScreen {
         async _onClickPay() {
             const order = this.env.pos.get_order()
             const partner = order.get_partner()
-            if(partner.is_membership_active && partner.membership_id) {
-                await this. ()
+            if(partner && partner.is_membership_active && partner.membership_id) {
+                await this.open_mobile_scanner()
+
                 if(String(this.data) == partner.membership_id) {
                      super._onClickPay()
                 }
+            }
+            else {
+                super._onClickPay()
             }
         }
 

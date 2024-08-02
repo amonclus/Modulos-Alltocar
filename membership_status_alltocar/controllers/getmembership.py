@@ -1,6 +1,7 @@
 from odoo import http, fields
 from datetime import datetime, timedelta
 
+
 class GetMembershipController(http.Controller):
     @http.route('/get_membership_status', type='json', auth='public')
     def get_membership_status(self, partner_id):
@@ -10,7 +11,7 @@ class GetMembershipController(http.Controller):
         return {'error': 'Partner not found'}
 
 
-class ChangeMembershipStatus(http.Controller):
+class ChangeMembershipStatusController(http.Controller):
     @http.route('/change_membership_status', type='json', auth='public')
     def change_membership_status(self, partner_id, membership):
         partner = http.request.env['res.partner'].browse(partner_id)

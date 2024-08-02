@@ -8,14 +8,14 @@ const MembershipPayment = (PaymentScreen) => class extends PaymentScreen {
         super.setup()
     }
 
+    //Inherited function that triggers when payment is made
     async validateOrder(isForceValidate){
         super.validateOrder()
         let orderProducts = this.currentOrder.get_orderlines()
         for (let i = 0; i < orderProducts.length; i++) {
             if (orderProducts[i].product.is_membership_product) {
                 this.modifyMembership();
-                this.currentOrder.partner.is_membership_active = true
-                this.env.posbus.trigger('set-initial-points');
+                this.currentOrder.partner.is_membership_active = true       //Updates the front end to avoid disparity with the back end
                 break;
             }
         }

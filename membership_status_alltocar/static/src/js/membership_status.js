@@ -32,6 +32,7 @@ odoo.define("membership_status.MembershipStatus", function(require) {
             this.state.partner = this.state.order.get_partner();
         }
 
+        //Used to check if button should be displayed or not (xml file)
         get isPartnerSelected() {
             return this.state.partnerSelected && !this.state.error;
         }
@@ -56,6 +57,7 @@ odoo.define("membership_status.MembershipStatus", function(require) {
             }
         }
 
+        //Accesses the server to check for the status of the client
         async fetchMembershipStatus() {
             try {
                 const result = await this.rpc({
@@ -77,7 +79,6 @@ odoo.define("membership_status.MembershipStatus", function(require) {
             }
         }
 
-        //Gets the list that should be active and sets it
         updatePricelist() {
             const listName = this.state.partner && this.state.partner.is_membership_active ? "Membership Pricelist" : "Retail Non-Member Pricelist";
             this.setList(listName);
