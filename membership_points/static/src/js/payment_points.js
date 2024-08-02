@@ -54,7 +54,7 @@ const MembershipPaymentPoints = (PaymentScreen) => class extends PaymentScreen {
 
     setDiscount(disc) {
         const orderLines = this.currentOrder.get_orderlines()
-        if(disc > 45) disc = 45
+        if(disc > 30) disc = 30
         for(let i = 0; i < orderLines.length; i++) {
             orderLines[i].set_discount(disc)
         }
